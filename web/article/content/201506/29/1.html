@@ -1,0 +1,335 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<title>合并运费返还方案公告 - Powered By CETVISION</title>
+	<meta name="author" content="CETVISION Team" />
+	<meta name="copyright" content="CETVISION" />
+		<meta name="keywords" content="合并运费返还方案公告" />
+		<meta name="description" content="合并运费返还方案公告" />
+<link href="/dp2345/resources/shop/css/common.css" rel="stylesheet" type="text/css" />
+<link href="/dp2345/resources/shop/css/article.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="/dp2345/resources/shop/js/jquery.js"></script>
+<script type="text/javascript" src="/dp2345/resources/shop/js/common.js"></script>
+<script type="text/javascript">
+$().ready(function() {
+
+	var $hits = $("#hits");
+
+	// 查看点击数
+	$.ajax({
+		url: "/dp2345/article/hits/29.jhtml",
+		type: "GET",
+		success: function(data) {
+			$hits.text(data);
+		}
+	});
+
+});
+</script>
+</head>
+<body>
+<script type="text/javascript" src="/dp2345/resources/shop/js/jquery.lSelect.js"></script>
+<script type="text/javascript">
+$().ready(function() {
+
+	var $headerLogin = $("#headerLogin");
+	var $headerRegister = $("#headerRegister");
+	var $headerUsername = $("#headerUsername");
+	var $headerLogout = $("#headerLogout");
+	var $productSearchForm = $("#productSearchForm");
+	var $keyword = $("#productSearchForm input");
+	var defaultKeyword = "商品搜索";
+	var $areaIndex = $("#areaIndex");
+	
+	var username = getCookie("username");
+	if (username != null) {
+		$headerUsername.text("您好, " + username).show();
+		$headerLogout.show();
+	} else {
+		$headerLogin.show();
+		$headerRegister.show();
+	}
+	
+	$keyword.focus(function() {
+		if ($keyword.val() == defaultKeyword) {
+			$keyword.val("");
+		}
+	});
+	
+	$keyword.blur(function() {
+		if ($keyword.val() == "") {
+			$keyword.val(defaultKeyword);
+		}
+	});
+	
+	$productSearchForm.submit(function() {
+		if ($.trim($keyword.val()) == "" || $keyword.val() == defaultKeyword) {
+			return false;
+		}
+	});
+	
+	// 地区选择
+	$areaIndex.lSelect({
+		url: "/dp2345/common/area.jhtml"
+	});
+
+});
+</script>
+<div class="container header">
+	<div class="span5">
+		<div class="logo">
+			<a href="/dp2345/">
+				<img src="/upload/image/logo.gif" alt="甲东家庭农场网上商城" />
+			</a>
+		</div>
+	</div>
+	<div class="span9">
+			无法取得<input type="hidden" id="areaIndex" name="location_area" />
+	</div>
+	<div class="span10 last">
+		<div class="topNav clearfix">
+			<ul>
+				<li id="headerLogin" class="headerLogin">
+					<a href="/dp2345/login.jhtml">登录</a>|
+				</li>
+				<li id="headerRegister" class="headerRegister">
+					<a href="/dp2345/register.jhtml">注册</a>|
+				</li>
+				<li id="headerUsername" class="headerUsername"></li>
+				<li id="headerLogout" class="headerLogout">
+					<a href="/dp2345/logout.jhtml">[退出]</a>|
+				</li>
+						<li>
+							<a href="/dp2345/member/index.jhtml">会员中心</a>
+							|
+						</li>
+						<li>
+							<a href="/dp2345/article/list/3.jhtml">购物指南</a>
+							|
+						</li>
+						<li>
+							<a href="/dp2345/article/list/7.jhtml">关于我们</a>
+							
+						</li>
+			</ul>
+		</div>
+		<div class="cart">
+			<a href="/dp2345/cart/list.jhtml">购物车</a>
+		</div>
+			<div class="phone">
+				客服热线:
+				<strong>15908025326</strong>
+			</div>
+	</div>
+	<div class="span24">
+		<ul class="mainNav">
+					<li>
+						<a href="/dp2345/">首页</a>
+						|
+					</li>
+					<li>
+						<a href="/dp2345/product/list/1.jhtml">时尚女装</a>
+						|
+					</li>
+					<li>
+						<a href="/dp2345/product/list/2.jhtml">精品男装</a>
+						|
+					</li>
+					<li>
+						<a href="/dp2345/product/list/3.jhtml">精致内衣</a>
+						|
+					</li>
+					<li>
+						<a href="/dp2345/product/list/4.jhtml">服饰配件</a>
+						|
+					</li>
+					<li>
+						<a href="/dp2345/product/list/5.jhtml">时尚女鞋</a>
+						|
+					</li>
+					<li>
+						<a href="/dp2345/product/list/6.jhtml">流行男鞋</a>
+						|
+					</li>
+					<li>
+						<a href="/dp2345/product/list/9.jhtml">童装童鞋</a>
+						
+					</li>
+		</ul>
+	</div>
+	<div class="span24">
+		<div class="tagWrap">
+			<ul class="tag">
+						<li class="icon" style="background: url(http://storage.cetvision.net/demo-image/2.x/tag/hot.gif) right no-repeat;">
+							<a href="/dp2345/product/list.jhtml?tagIds=1">热销</a>
+						</li>
+						<li class="icon" style="background: url(http://storage.cetvision.net/demo-image/2.x/tag/new.gif) right no-repeat;">
+							<a href="/dp2345/product/list.jhtml?tagIds=2">最新</a>
+						</li>
+			</ul>
+			<div class="hotSearch">
+					热门搜索:
+						<a href="/dp2345/product/search.jhtml?keyword=%E8%94%AC%E8%8F%9C">蔬菜</a>
+						<a href="/dp2345/product/search.jhtml?keyword=%E6%9C%89%E6%9C%BA">有机</a>
+						<a href="/dp2345/product/search.jhtml?keyword=%E5%81%A5%E5%BA%B7">健康</a>
+						<a href="/dp2345/product/search.jhtml?keyword=%E5%AE%B6%E5%BA%AD">家庭</a>
+						<a href="/dp2345/product/search.jhtml?keyword=%E7%94%B2%E4%B8%9C">甲东</a>
+						<a href="/dp2345/product/search.jhtml?keyword=%E5%86%9C%E5%9C%BA">农场</a>
+						<a href="/dp2345/product/search.jhtml?keyword=%E5%B9%B2%E6%9E%9C">干果</a>
+						<a href="/dp2345/product/search.jhtml?keyword=%E4%B9%B3%E9%A5%AE">乳饮</a>
+						<a href="/dp2345/product/search.jhtml?keyword=%E5%A6%87%E5%A9%B4">妇婴</a>
+			</div>
+			<div class="search">
+				<form id="productSearchForm" action="/dp2345/product/search.jhtml" method="get">
+					<input name="keyword" class="keyword" value="商品搜索" maxlength="30" />
+					<button type="submit">搜索</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>	<div class="container articleContent">
+		<div class="span6">
+			<div class="hotArticleCategory">
+				<div class="title">热点分类</div>
+						<dl>
+							<dt>
+								<a href="/dp2345/article/list/1.jhtml">商城动态</a>
+							</dt>
+						</dl>
+						<dl>
+							<dt>
+								<a href="/dp2345/article/list/2.jhtml">活动促销</a>
+							</dt>
+						</dl>
+						<dl>
+							<dt>
+								<a href="/dp2345/article/list/3.jhtml">购物指南</a>
+							</dt>
+						</dl>
+						<dl>
+							<dt>
+								<a href="/dp2345/article/list/4.jhtml">支付方式</a>
+							</dt>
+						</dl>
+						<dl>
+							<dt>
+								<a href="/dp2345/article/list/5.jhtml">配送方式</a>
+							</dt>
+						</dl>
+						<dl>
+							<dt>
+								<a href="/dp2345/article/list/6.jhtml">售后服务</a>
+							</dt>
+						</dl>
+						<dl class="last">
+							<dt>
+								<a href="/dp2345/article/list/7.jhtml">关于我们</a>
+							</dt>
+						</dl>
+			</div>
+			<div class="hotArticle">
+				<div class="title">热点文章</div>
+				<ul>
+							<li>
+								<a href="/dp2345/article/content/201506/30/1.html" title="电商变革 电商造节促销欲打翻身仗">电商变革 电商造节促销欲打翻身仗</a>
+							</li>
+							<li>
+								<a href="/dp2345/article/content/201506/35/1.html" title="中国电商交易额8.1万亿 网购占比提升">中国电商交易额8.1万亿 网购占比</a>
+							</li>
+							<li>
+								<a href="/dp2345/article/content/201506/27/1.html" title="五月靓丽女人节 呵护自己">五月靓丽女人节 呵护自己</a>
+							</li>
+							<li>
+								<a href="/dp2345/article/content/201506/28/1.html" title="电子商务未来是否需要“移动”">电子商务未来是否需要“移动”</a>
+							</li>
+							<li>
+								<a href="/dp2345/article/content/201506/34/1.html" title="看国茶商城被网友评为最诚信电商之一，言电商信誉、品牌塑造。">看国茶商城被网友评为最诚信电商</a>
+							</li>
+							<li>
+								<a href="/dp2345/article/content/201506/29/1.html" title="合并运费返还方案公告">合并运费返还方案公告</a>
+							</li>
+							<li>
+								<a href="/dp2345/article/content/201506/31/1.html" title="酷酷搭配逛街去 时尚美范赚足回头率">酷酷搭配逛街去 时尚美范赚足回头</a>
+							</li>
+							<li>
+								<a href="/dp2345/article/content/201506/33/1.html" title="创业者电商 促进中国经济生活转型">创业者电商 促进中国经济生活转型</a>
+							</li>
+							<li>
+								<a href="/dp2345/article/content/201506/32/1.html" title="谷歌正式进军电商行业 推购物快递服务">谷歌正式进军电商行业 推购物快递</a>
+							</li>
+				</ul>
+			</div>
+		</div>
+		<div class="span18 last">
+			<div class="path">
+				<ul>
+					<li>
+						<a href="/dp2345/">首页</a>
+					</li>
+					<li>
+						<a href="/dp2345/article/list/1.jhtml">商城动态</a>
+					</li>
+				</ul>
+			</div>
+			<div class="main">
+				<h1 class="title">合并运费返还方案公告</h1>
+				<div class="info">
+					日期: 2015-06-20 00:01:24
+					作者: 
+					点击数: <span id="hits">&nbsp;</span>
+				</div>
+				<div class="content">尊敬的顾客，您好！<br /> <br />     如果您的多个订单被合并发货， 并且您支付了多次运费的， 请在包裹签收7天后致电客服热线400-000-****， 或发邮件到官方邮箱进行登记，我们将在1个工作日内按实际发货情况将多收运费返还到您的商城个人账号。<br /> <br />     特别说明： 收货后7天内因为可能发生退换货，不处理相关运费返还业务。<br /> <br />     祝您工作顺利、生活愉快！<br /> <br /> 2013年4月27日</div>
+			</div>
+		</div>
+	</div>
+<div class="container footer">
+	<div class="span24">
+		<div class="footerAd">
+					<img src="http://storage.cetvision.net/demo-image/2.x/ad/footer.jpg" width="950" height="52" alt="我们的优势" title="我们的优势" />
+</div>	</div>
+	<div class="span24">
+		<ul class="bottomNav">
+					<li>
+						<a href="#">关于我们</a>
+						|
+					</li>
+					<li>
+						<a href="#">联系我们</a>
+						|
+					</li>
+					<li>
+						<a href="#">诚聘英才</a>
+						|
+					</li>
+					<li>
+						<a href="#">法律声明</a>
+						|
+					</li>
+					<li>
+						<a href="/dp2345/friend_link.jhtml">友情链接</a>
+						|
+					</li>
+					<li>
+						<a href="/dp2345/article/list/4.jhtml" target="_blank">支付方式</a>
+						|
+					</li>
+					<li>
+						<a href="/dp2345/article/list/5.jhtml" target="_blank">配送方式</a>
+						|
+					</li>
+					<li>
+						<a href="http://www.dp2345.com">DP2345官网</a>
+						|
+					</li>
+					<li>
+						<a href="http://bbs.dp2345.com">DP2345论坛</a>
+						
+					</li>
+		</ul>
+	</div>
+	<div class="span24">
+		<div class="copyright">Copyright © 2005-2013 甲东家庭农场网上商城 版权所有</div>
+	</div>
+</div></body>
+</html>
