@@ -37,6 +37,15 @@ import com.dp2345.entity.Order.PaymentStatus;
 @Repository("shopDaoImpl")
 public class ShopDaoImpl extends BaseDaoImpl<Shop, Long> implements ShopDao {
 
+	public boolean usernameExists(String username) {
+		if (username == null) {
+			return false;
+		}
+		String jpql = "select count(*) from Shop shops where lower(shops.username) = lower(:username)";
+		Long count = entityManager.createQuery(jpql, Long.class).setFlushMode(FlushModeType.COMMIT).setParameter("username", username).getSingleResult();
+		return count > 0;
+	}
+
 	public boolean shopAliasExists(String shopAlias) {
 		if (shopAlias == null) {
 			return false;
@@ -62,6 +71,18 @@ public class ShopDaoImpl extends BaseDaoImpl<Shop, Long> implements ShopDao {
 		try {
 			String jpql = "select shops from Shop shops where lower(shops.shop_alias) = lower(:shop_alias)";
 			return entityManager.createQuery(jpql, Shop.class).setFlushMode(FlushModeType.COMMIT).setParameter("shop_alias", username).getSingleResult();
+		} catch (NoResultException e) {
+			return null;
+		}
+	}
+
+	public Shop findByUsername(String username) {
+		if (username == null) {
+			return null;
+		}
+		try {
+			String jpql = "select shops from Shop shops where lower(shops.username) = lower(:username)";
+			return entityManager.createQuery(jpql, Shop.class).setFlushMode(FlushModeType.COMMIT).setParameter("username", username).getSingleResult();
 		} catch (NoResultException e) {
 			return null;
 		}

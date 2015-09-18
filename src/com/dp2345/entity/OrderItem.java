@@ -290,7 +290,7 @@ public class OrderItem extends BaseEntity {
 
 	/**
 	 * 获取商品
-	 * 
+	 *
 	 * @return 商品
 	 */
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -300,7 +300,7 @@ public class OrderItem extends BaseEntity {
 
 	/**
 	 * 设置商品
-	 * 
+	 *
 	 * @param product
 	 *            商品
 	 */

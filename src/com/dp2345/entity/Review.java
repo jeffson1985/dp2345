@@ -233,7 +233,7 @@ public class Review extends BaseEntity {
 	 * @return 商家
 	 */
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(nullable = false, updatable = false)
+	@JoinColumn(nullable = true, updatable = false)
 	public Customer getCustomer() {
 		return customer;
 	}

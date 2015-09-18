@@ -10,7 +10,6 @@ import java.util.Date;
 import java.util.List;
 
 import com.dp2345.entity.Admin;
-import com.dp2345.entity.Member;
 import com.dp2345.entity.Shop;
 
 /**
@@ -23,8 +22,26 @@ public interface ShopService extends BaseService<Shop, Long> {
 
 	/**
 	 * 判断用户名是否存在
-	 * 
+	 *
 	 * @param username
+	 *            用户名(忽略大小写)
+	 * @return 用户名是否存在
+	 */
+	boolean usernameExists(String username);
+
+	/**
+	 * 判断用户名是否禁用
+	 *
+	 * @param username
+	 *            用户名(忽略大小写)
+	 * @return 用户名是否禁用
+	 */
+	boolean usernameDisabled(String username);
+
+	/**
+	 * 判断用户名是否存在
+	 * 
+	 * @param shopAlias
 	 *            用户名(忽略大小写)
 	 * @return 用户名是否存在
 	 */
@@ -33,7 +50,7 @@ public interface ShopService extends BaseService<Shop, Long> {
 	/**
 	 * 判断用户名是否禁用
 	 * 
-	 * @param username
+	 * @param shopAlias
 	 *            用户名(忽略大小写)
 	 * @return 用户名是否禁用
 	 */
@@ -88,11 +105,11 @@ public interface ShopService extends BaseService<Shop, Long> {
 	/**
 	 * 根据用户名查找店铺
 	 * 
-	 * @param username
+	 * @param shopAlias
 	 *            用户名(忽略大小写)
 	 * @return 店铺，若不存在则返回null
 	 */
-	Shop findByshopAlias(String shopAlias);
+	Shop findByShopAlias(String shopAlias);
 
 	/**
 	 * 根据E-mail查找店铺
@@ -128,7 +145,7 @@ public interface ShopService extends BaseService<Shop, Long> {
 	 * 
 	 * @return 当前登录店铺，若不存在则返回null
 	 */
-	Member getCurrent();
+	Shop getCurrent();
 
 	/**
 	 * 获取当前登录用户名

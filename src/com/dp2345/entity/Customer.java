@@ -28,6 +28,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
+import com.dp2345.interceptor.CustomerInterceptor;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.validator.constraints.Email;
@@ -48,10 +49,13 @@ import com.dp2345.util.JsonUtils;
 @SequenceGenerator(name = "sequenceGenerator", sequenceName = "xx_customer_sequence")
 public class Customer extends BaseEntity {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 5573899039363144864L;
+	private static final long serialVersionUID = 3083177352995559548L;
+
+	/** "身份信息"参数名称 */
+	public static final String PRINCIPAL_ATTRIBUTE_NAME = CustomerInterceptor.class.getName() + ".PRINCIPAL";
+
+	/** "店铺用户名"Cookie名称 */
+	public static final String USERNAME_COOKIE_NAME = "customerusername";
 
 	/** 用户名 */
 	private String username;
@@ -239,7 +243,7 @@ public class Customer extends BaseEntity {
 	/**
 	 * 设置商家名称
 	 * 
-	 * @param storeName
+	 * @param name
 	 *            商家名称
 	 */
 	public void setName(String name) {
@@ -707,7 +711,7 @@ public class Customer extends BaseEntity {
 	/**
 	 * 设置商家等级
 	 * 
-	 * @param storeRank
+	 * @param customerRank
 	 *            商家等级
 	 */
 	public void setCustomerRank(CustomerRank customerRank) {
@@ -892,7 +896,7 @@ public class Customer extends BaseEntity {
 	/**
 	 * 设置商家域名
 	 * 
-	 * @param customerDomain
+	 * @param domain
 	 *            商家域名
 	 */
 	public void setDomain(String domain) {
@@ -930,7 +934,7 @@ public class Customer extends BaseEntity {
 	/**
 	 * 设置商家照片
 	 * 
-	 * @param customerImage
+	 * @param image
 	 *            商家照片
 	 */
 	public void setImage(String image) {
@@ -949,7 +953,7 @@ public class Customer extends BaseEntity {
 	/**
 	 * 设置商家模版
 	 * 
-	 * @param customerTemplate
+	 * @param template
 	 *            商家模版
 	 */
 	public void setTemplate(String template) {
@@ -968,7 +972,7 @@ public class Customer extends BaseEntity {
 	/**
 	 * 设置商家模版照片
 	 * 
-	 * @param customerTemplateImage
+	 * @param templateImage
 	 *            模版照片
 	 */
 	public void setCustomerImage(String templateImage) {
@@ -987,7 +991,7 @@ public class Customer extends BaseEntity {
 	/**
 	 * 设置商家介绍
 	 * 
-	 * @param storeDescript
+	 * @param descript
 	 *            商家介绍
 	 */
 	public void setDescript(String descript) {
@@ -997,29 +1001,29 @@ public class Customer extends BaseEntity {
 	/**
 	 * 获取商家注册项值
 	 * 
-	 * @param storeAttribute
+	 * @param customerAttribute
 	 *            商家注册项
 	 * @return 商家注册项值
 	 */
 	@Transient
-	public Object getAttributeValue(CustomerAttribute storeAttribute) {
-		if (storeAttribute != null) {
-			if (storeAttribute.getType() == Type.name) {
+	public Object getAttributeValue(CustomerAttribute customerAttribute) {
+		if (customerAttribute != null) {
+			if (customerAttribute.getType() == Type.name) {
 				return getName();
-			} else if (storeAttribute.getType() == Type.area) {
+			} else if (customerAttribute.getType() == Type.area) {
 				return getArea();
-			} else if (storeAttribute.getType() == Type.address) {
+			} else if (customerAttribute.getType() == Type.address) {
 				return getAddress();
-			} else if (storeAttribute.getType() == Type.zipCode) {
+			} else if (customerAttribute.getType() == Type.zipCode) {
 				return getZipCode();
-			} else if (storeAttribute.getType() == Type.phone) {
+			} else if (customerAttribute.getType() == Type.phone) {
 				return getPhone();
-			} else if (storeAttribute.getType() == Type.mobile) {
+			} else if (customerAttribute.getType() == Type.mobile) {
 				return getMobile();
-			} else if (storeAttribute.getType() == Type.checkbox) {
-				if (storeAttribute.getPropertyIndex() != null) {
+			} else if (customerAttribute.getType() == Type.checkbox) {
+				if (customerAttribute.getPropertyIndex() != null) {
 					try {
-						String propertyName = ATTRIBUTE_VALUE_PROPERTY_NAME_PREFIX + storeAttribute.getPropertyIndex();
+						String propertyName = ATTRIBUTE_VALUE_PROPERTY_NAME_PREFIX + customerAttribute.getPropertyIndex();
 						String propertyValue = (String) PropertyUtils.getProperty(this, propertyName);
 						if (propertyValue != null) {
 							return JsonUtils.toObject(propertyValue, List.class);
@@ -1033,9 +1037,9 @@ public class Customer extends BaseEntity {
 					}
 				}
 			} else {
-				if (storeAttribute.getPropertyIndex() != null) {
+				if (customerAttribute.getPropertyIndex() != null) {
 					try {
-						String propertyName = ATTRIBUTE_VALUE_PROPERTY_NAME_PREFIX + storeAttribute.getPropertyIndex();
+						String propertyName = ATTRIBUTE_VALUE_PROPERTY_NAME_PREFIX + customerAttribute.getPropertyIndex();
 						return (String) PropertyUtils.getProperty(this, propertyName);
 					} catch (IllegalAccessException e) {
 						e.printStackTrace();
@@ -1053,36 +1057,36 @@ public class Customer extends BaseEntity {
 	/**
 	 * 设置商家注册项值
 	 * 
-	 * @param storeAttribute
+	 * @param customerAttribute
 	 *            商家注册项
 	 * @param attributeValue
 	 *            商家注册项值
 	 */
 	@Transient
-	public void setAttributeValue(CustomerAttribute storeAttribute, Object attributeValue) {
-		if (storeAttribute != null) {
+	public void setAttributeValue(CustomerAttribute customerAttribute, Object attributeValue) {
+		if (customerAttribute != null) {
 			if (attributeValue instanceof String && StringUtils.isEmpty((String) attributeValue)) {
 				attributeValue = null;
 			}
-			if (storeAttribute.getType() == Type.name && (attributeValue instanceof String || attributeValue == null)) {
+			if (customerAttribute.getType() == Type.name && (attributeValue instanceof String || attributeValue == null)) {
 				setName((String) attributeValue);
-			}else if (storeAttribute.getType() == Type.birth && (attributeValue instanceof Date || attributeValue == null)) {
+			}else if (customerAttribute.getType() == Type.birth && (attributeValue instanceof Date || attributeValue == null)) {
 				setBirth((Date) attributeValue);
-			} else if (storeAttribute.getType() == Type.area && (attributeValue instanceof Area || attributeValue == null)) {
+			} else if (customerAttribute.getType() == Type.area && (attributeValue instanceof Area || attributeValue == null)) {
 				setArea((Area) attributeValue);
-			} else if (storeAttribute.getType() == Type.address && (attributeValue instanceof String || attributeValue == null)) {
+			} else if (customerAttribute.getType() == Type.address && (attributeValue instanceof String || attributeValue == null)) {
 				setAddress((String) attributeValue);
-			} else if (storeAttribute.getType() == Type.zipCode && (attributeValue instanceof String || attributeValue == null)) {
+			} else if (customerAttribute.getType() == Type.zipCode && (attributeValue instanceof String || attributeValue == null)) {
 				setZipCode((String) attributeValue);
-			} else if (storeAttribute.getType() == Type.phone && (attributeValue instanceof String || attributeValue == null)) {
+			} else if (customerAttribute.getType() == Type.phone && (attributeValue instanceof String || attributeValue == null)) {
 				setPhone((String) attributeValue);
-			} else if (storeAttribute.getType() == Type.mobile && (attributeValue instanceof String || attributeValue == null)) {
+			} else if (customerAttribute.getType() == Type.mobile && (attributeValue instanceof String || attributeValue == null)) {
 				setMobile((String) attributeValue);
-			} else if (storeAttribute.getType() == Type.checkbox && (attributeValue instanceof List || attributeValue == null)) {
-				if (storeAttribute.getPropertyIndex() != null) {
-					if (attributeValue == null || (storeAttribute.getOptions() != null && storeAttribute.getOptions().containsAll((List<?>) attributeValue))) {
+			} else if (customerAttribute.getType() == Type.checkbox && (attributeValue instanceof List || attributeValue == null)) {
+				if (customerAttribute.getPropertyIndex() != null) {
+					if (attributeValue == null || (customerAttribute.getOptions() != null && customerAttribute.getOptions().containsAll((List<?>) attributeValue))) {
 						try {
-							String propertyName = ATTRIBUTE_VALUE_PROPERTY_NAME_PREFIX + storeAttribute.getPropertyIndex();
+							String propertyName = ATTRIBUTE_VALUE_PROPERTY_NAME_PREFIX + customerAttribute.getPropertyIndex();
 							PropertyUtils.setProperty(this, propertyName, JsonUtils.toJson(attributeValue));
 						} catch (IllegalAccessException e) {
 							e.printStackTrace();
@@ -1094,9 +1098,9 @@ public class Customer extends BaseEntity {
 					}
 				}
 			} else {
-				if (storeAttribute.getPropertyIndex() != null) {
+				if (customerAttribute.getPropertyIndex() != null) {
 					try {
-						String propertyName = ATTRIBUTE_VALUE_PROPERTY_NAME_PREFIX + storeAttribute.getPropertyIndex();
+						String propertyName = ATTRIBUTE_VALUE_PROPERTY_NAME_PREFIX + customerAttribute.getPropertyIndex();
 						PropertyUtils.setProperty(this, propertyName, attributeValue);
 					} catch (IllegalAccessException e) {
 						e.printStackTrace();
@@ -1137,6 +1141,7 @@ public class Customer extends BaseEntity {
 	
 	/**
 	 * 删除前处理
+	 * 商家删除前必须处理商品，订单，收款单，文章，等的关系
 	 */
 	@PreRemove
 	public void preRemove() {

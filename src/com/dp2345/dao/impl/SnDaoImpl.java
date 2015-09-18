@@ -34,6 +34,7 @@ import freemarker.template.TemplateException;
 public class SnDaoImpl implements SnDao, InitializingBean {
 
 	private HiloOptimizer productHiloOptimizer;
+	private HiloOptimizer setProductHiloOptimizer;
 	private HiloOptimizer orderHiloOptimizer;
 	private HiloOptimizer paymentHiloOptimizer;
 	private HiloOptimizer refundsHiloOptimizer;
@@ -80,7 +81,7 @@ public class SnDaoImpl implements SnDao, InitializingBean {
 		Assert.notNull(type);
 		if (type == Type.product) {
 			return productHiloOptimizer.generate();
-		} else if (type == Type.order) {
+		}else if (type == Type.order) {
 			return orderHiloOptimizer.generate();
 		} else if (type == Type.payment) {
 			return paymentHiloOptimizer.generate();

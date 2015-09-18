@@ -196,6 +196,7 @@ public class CartItem extends BaseEntity {
 	 */
 	@Transient
 	public BigDecimal getPrice() {
+
 		if (getProduct() != null && getProduct().getPrice() != null) {
 			Setting setting = SettingUtils.get();
 			if (getCart() != null && getCart().getMember() != null && getCart().getMember().getMemberRank() != null) {
@@ -211,6 +212,7 @@ public class CartItem extends BaseEntity {
 				}
 			}
 			return setting.setScale(getProduct().getPrice());
+
 		} else {
 			return new BigDecimal(0);
 		}

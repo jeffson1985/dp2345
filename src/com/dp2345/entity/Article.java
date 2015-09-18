@@ -394,7 +394,7 @@ public class Article extends BaseEntity {
 	 */
 	@NotNull
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(nullable = false)
+	@JoinColumn(nullable = true)
 	public Shop getShop() {
 		return shop;
 	}
@@ -416,7 +416,7 @@ public class Article extends BaseEntity {
 	 */
 	@NotNull
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(nullable = false)
+	@JoinColumn(nullable = true)
 	public Customer getCustomer() {
 		return customer;
 	}

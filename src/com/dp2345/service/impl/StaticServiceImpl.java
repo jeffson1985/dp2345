@@ -261,7 +261,7 @@ public class StaticServiceImpl implements StaticService, ServletContextAware {
 			}
 			productDao.clear();
 		}
-		buildIndex();
+		//buildIndex();
 		buildSitemap();
 		buildOther();
 		return buildCount;

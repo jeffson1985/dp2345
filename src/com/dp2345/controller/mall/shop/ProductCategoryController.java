@@ -3,7 +3,7 @@
  * Support: http://www.cetvision.com
  * License: http://www.cetvision.com/license
  */
-package com.dp2345.controller.mall.member.shop;
+package com.dp2345.controller.mall.shop;
 
 import java.util.HashSet;
 import java.util.List;

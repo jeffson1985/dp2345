@@ -43,8 +43,7 @@ public class ShopServiceImpl extends BaseServiceImpl<Shop, Long> implements Shop
 
 	@Resource(name = "shopDaoImpl")
 	private ShopDao shopDao;
-	@Resource(name = "memberDaoImpl")
-	private MemberDao memberDao;
+
 	@Resource(name = "depositDaoImpl")
 	private DepositDao depositDao;
 
@@ -52,7 +51,26 @@ public class ShopServiceImpl extends BaseServiceImpl<Shop, Long> implements Shop
 	public void setBaseDao(ShopDao shopDao) {
 		super.setBaseDao(shopDao);
 	}
-	
+
+
+	@Transactional(readOnly = true)
+	public boolean usernameExists(String username) {
+		return shopDao.usernameExists(username);
+	}
+
+	@Transactional(readOnly = true)
+	public boolean usernameDisabled(String username) {
+		Assert.hasText(username);
+		Setting setting = SettingUtils.get();
+		if (setting.getDisabledUsernames() != null) {
+			for (String disabledUsername : setting.getDisabledUsernames()) {
+				if (StringUtils.containsIgnoreCase(username, disabledUsername)) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
 
 	@Transactional(readOnly = true)
 	public boolean shopAliasExists(String shopAlias) {
@@ -141,7 +159,7 @@ public class ShopServiceImpl extends BaseServiceImpl<Shop, Long> implements Shop
 	}
 
 	@Transactional(readOnly = true)
-	public Shop findByshopAlias(String shopAlias) {
+	public Shop findByShopAlias(String shopAlias) {
 		return shopDao.findByShopAlias(shopAlias);
 	}
 
@@ -172,13 +190,13 @@ public class ShopServiceImpl extends BaseServiceImpl<Shop, Long> implements Shop
 	 * 取得店主信息
 	 */
 	@Transactional(readOnly = true)
-	public Member getCurrent() {
+	public Shop getCurrent() {
 		RequestAttributes requestAttributes = RequestContextHolder.currentRequestAttributes();
 		if (requestAttributes != null) {
 			HttpServletRequest request = ((ServletRequestAttributes) requestAttributes).getRequest();
 			Principal principal = (Principal) request.getSession().getAttribute(Member.PRINCIPAL_ATTRIBUTE_NAME);
 			if (principal != null) {
-				return memberDao.find(principal.getId());
+				return shopDao.find(principal.getId());
 			}
 		}
 		return null;

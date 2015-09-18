@@ -279,7 +279,7 @@ public class ShopController extends BaseController {
 			for (Long id : ids) {
 				Shop shop = shopService.find(id);
 				// 店铺尚且存在商品，无法删除
-				if (shop != null && shop.getSetProducts().size() > 0) {
+				if (shop != null && shop.getPackageProducts().size() > 0) {
 					return Message.error("admin.shop.deleteExistDepositNotAllowed", shop.getShopName());
 				}
 			}

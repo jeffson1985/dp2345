@@ -73,6 +73,9 @@ public class Area extends OrderEntity {
 	/** 商家 */
 	private Set<Customer> customers = new HashSet<Customer>();
 
+	/** 商品 */
+	private Set<Product> products = new HashSet<Product>();
+
 	/**
 	 * 获取名称
 	 * 
@@ -194,6 +197,27 @@ public class Area extends OrderEntity {
 	 */
 	public void setMembers(Set<Member> members) {
 		this.members = members;
+	}
+
+
+	/**
+	 * 获取商品
+	 *
+	 * @return 商品
+	 */
+	@OneToMany(mappedBy = "area", fetch = FetchType.LAZY)
+	public Set<Product> getProducts() {
+		return products;
+	}
+
+	/**
+	 * 设置商品
+	 *
+	 * @param products
+	 *            商品
+	 */
+	public void setProducts(Set<Product> products) {
+		this.products = products;
 	}
 
 	/**

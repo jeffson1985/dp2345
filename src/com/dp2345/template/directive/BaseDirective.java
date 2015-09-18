@@ -50,6 +50,8 @@ public abstract class BaseDirective implements TemplateDirectiveModel {
 	private static final String ORDER_BY_ITEM_SEPARATOR = "\\s*,\\s*";
 	/** 排序字段分隔符 */
 	private static final String ORDER_BY_FIELD_SEPARATOR = "\\s+";
+	/** "地域"参数名称 */
+	private static final String AREA_PARAMETER_NAME = "userArea";
 
 	/**
 	 * 使用缓存
@@ -77,6 +79,21 @@ public abstract class BaseDirective implements TemplateDirectiveModel {
 	protected String getCacheRegion(Environment env, Map<String, TemplateModel> params) throws TemplateModelException {
 		String cacheRegion = FreemarkerUtils.getParameter(CACHE_REGION_PARAMETER_NAME, String.class, params);
 		return cacheRegion != null ? cacheRegion : env.getTemplate().getName();
+	}
+
+
+	/**
+	 * 获取用户所在地区
+	 *
+	 * @param env
+	 *            Environment
+	 * @param params
+	 *            参数
+	 * @return 所在地
+	 */
+	protected String getUserArea(Environment env, Map<String, TemplateModel> params) throws TemplateModelException {
+		String userArea = FreemarkerUtils.getParameter(AREA_PARAMETER_NAME, String.class, params);
+		return userArea != null ? userArea : env.getTemplate().getName();
 	}
 
 	/**

@@ -49,10 +49,13 @@ public class PromotionListDirective extends BaseDirective {
 	public void execute(Environment env, Map params, TemplateModel[] loopVars, TemplateDirectiveBody body) throws TemplateException, IOException {
 		Boolean hasBegun = FreemarkerUtils.getParameter(HAS_BEGUN_PARAMETER_NAME, Boolean.class, params);
 		Boolean hasEnded = FreemarkerUtils.getParameter(HAS_ENDED_PARAMETER_NAME, Boolean.class, params);
-
 		List<Promotion> promotions;
 		boolean useCache = useCache(env, params);
 		String cacheRegion = getCacheRegion(env, params);
+		// 取得访问用户所在地，为了实现只显示用户所在地的产品
+		String userArea = getUserArea(env, params);
+
+		System.out.println("用户所在地：" + userArea);
 		Integer count = getCount(params);
 		List<Filter> filters = getFilters(params, Promotion.class);
 		List<Order> orders = getOrders(params);

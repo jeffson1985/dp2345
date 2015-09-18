@@ -158,6 +158,8 @@ public class ProductListDirective extends BaseDirective {
 			}
 		}
 		setLocalVariable(VARIABLE_NAME, products, env, body);
+		//if(products.size() > 0)
+			//System.out.println("商品所属地区：" + products.get(0).getArea().getFullName());
 	}
 
 }

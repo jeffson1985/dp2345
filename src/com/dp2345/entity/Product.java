@@ -175,6 +175,9 @@ public class Product extends BaseEntity {
 	/** 是否列出 */
 	private Boolean isList;
 
+	/** 是否套餐商品 */
+	private Boolean isPackage;
+
 	/** 是否置顶 */
 	private Boolean isTop;
 
@@ -307,8 +310,14 @@ public class Product extends BaseEntity {
 	/** 品牌 */
 	private Brand brand;
 	
-	/** 所属实体商家 */
+	/** 所属商家 */
 	private Customer customer;
+
+	/** 所属实体店铺 */
+	private Shop shop;
+
+	/** 地区 */
+	private Area area;
 
 	/** 商品图片 */
 	private List<ProductImage> productImages = new ArrayList<ProductImage>();
@@ -336,6 +345,9 @@ public class Product extends BaseEntity {
 
 	/** 购物车项 */
 	private Set<CartItem> cartItems = new HashSet<CartItem>();
+
+	/** 套餐项 */
+	private Set<PackageItem> packageItems = new HashSet<PackageItem>();
 
 	/** 订单项 */
 	private Set<OrderItem> orderItems = new HashSet<OrderItem>();
@@ -696,6 +708,28 @@ public class Product extends BaseEntity {
 	 */
 	public void setIsList(Boolean isList) {
 		this.isList = isList;
+	}
+
+	/**
+	 * 获取是否套餐
+	 *
+	 * @return 是否套餐
+	 */
+	@Field(store = Store.YES, index = Index.UN_TOKENIZED)
+	@NotNull
+	@Column(nullable = false)
+	public Boolean getIsPackage() {
+		return isPackage;
+	}
+
+	/**
+	 * 设置是否套餐
+	 *
+	 * @param isPackage
+	 *            是否套餐
+	 */
+	public void setIsPackage(Boolean isPackage) {
+		this.isPackage = isPackage;
 	}
 
 	/**
@@ -1590,7 +1624,7 @@ public class Product extends BaseEntity {
 	 */
 	@NotNull
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(nullable = false)
+	@JoinColumn(nullable = true)
 	public Customer getCustomer() {
 		return customer;
 	}
@@ -1603,6 +1637,50 @@ public class Product extends BaseEntity {
 	 */
 	public void setCustomer(Customer customer) {
 		this.customer = customer;
+	}
+
+
+	/**
+	 * 获取店铺
+	 * 多商家商城开发时，追加
+	 * @return 店铺
+	 */
+	@NotNull
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(nullable = true)
+	public Shop getShop() {
+		return shop;
+	}
+
+	/**
+	 * 设置店铺
+	 * 多商家商城开发时，追加
+	 * @param shop
+	 *            店铺
+	 */
+	public void setShop(Shop shop) {
+		this.shop = shop;
+	}
+
+	/**
+	 * 获取地区
+	 *
+	 * @return 地区
+	 */
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(nullable = false)
+	public Area getArea() {
+		return area;
+	}
+
+	/**
+	 * 设置地区
+	 *
+	 * @param area
+	 *            地区
+	 */
+	public void setArea(Area area) {
+		this.area = area;
 	}
 	
 	/**
@@ -1811,6 +1889,26 @@ public class Product extends BaseEntity {
 	 */
 	public void setCartItems(Set<CartItem> cartItems) {
 		this.cartItems = cartItems;
+	}
+
+	/**
+	 * 获取套餐项
+	 *
+	 * @return 套餐项
+	 */
+	@OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+	public Set<PackageItem> getPackageItems() {
+		return packageItems;
+	}
+
+	/**
+	 * 设置套餐项
+	 *
+	 * @param packageItems
+	 *            套餐项
+	 */
+	public void setPackageItems(Set<PackageItem> packageItems) {
+		this.packageItems = packageItems;
 	}
 
 	/**

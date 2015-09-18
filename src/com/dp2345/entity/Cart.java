@@ -64,9 +64,6 @@ public class Cart extends BaseEntity {
 
 	/** 购物车项 */
 	private Set<CartItem> cartItems = new HashSet<CartItem>();
-	
-	/** 套餐项 */
-	private Set<CartSetProductItem>  setItems = new HashSet<CartSetProductItem>();
 
 	/**
 	 * 获取密钥
@@ -108,26 +105,6 @@ public class Cart extends BaseEntity {
 		this.member = member;
 	}
 
-	/**
-	 * 获取购物车项  套餐商品
-	 * 
-	 * @return 购物车项
-	 */
-	@OneToMany(mappedBy = "cart", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
-	public Set<CartSetProductItem> getSetItems() {
-		return setItems;
-	}
-	
-
-	/**
-	 * 设置购物车项  套餐商品
-	 * 
-	 * @param setItems
-	 *            购物车项
-	 */
-	public void setSetItems(Set<CartSetProductItem> setItems) {
-		this.setItems = setItems;
-	}
 	
 	/**
 	 * 获取购物车项

@@ -49,10 +49,7 @@ import com.dp2345.util.JsonUtils;
 @SequenceGenerator(name = "sequenceGenerator", sequenceName = "xx_shop_sequence")
 public class Shop extends BaseEntity {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 5573899039363144864L;
+	private static final long serialVersionUID = 1164334572928487383L;
 
 	/** "身份信息"参数名称 */
 	public static final String PRINCIPAL_ATTRIBUTE_NAME = ShopInterceptor.class.getName() + ".PRINCIPAL";
@@ -168,7 +165,7 @@ public class Shop extends BaseEntity {
 	
 	// 多用户商城开发添加
 	/** 商品 */
-	private Set<SetProduct> setProducts = new HashSet<SetProduct>();
+	private Set<Product> packageProducts = new HashSet<Product>();
 	
 	/** 店铺分类 **/
 	private ShopCategory shopCategory;
@@ -258,7 +255,7 @@ public class Shop extends BaseEntity {
 	/**
 	 * 设置店铺名称
 	 * 
-	 * @param storeName
+	 * @param shopName
 	 *            店铺名称
 	 */
 	public void setShopName(String shopName) {
@@ -280,7 +277,7 @@ public class Shop extends BaseEntity {
 	/**
 	 * 设置店铺别名
 	 * 
-	 * @param storeAlias
+	 * @param shopAlias
 	 *            店铺别名
 	 */
 	public void setShopAlias(String shopAlias) {
@@ -749,7 +746,7 @@ public class Shop extends BaseEntity {
 	/**
 	 * 设置店铺等级
 	 * 
-	 * @param storeRank
+	 * @param shopRank
 	 *            店铺等级
 	 */
 	public void setShopRank(ShopRank shopRank) {
@@ -771,7 +768,7 @@ public class Shop extends BaseEntity {
 	/**
 	 * 设置店铺分类
 	 * 
-	 * @param storeCategory
+	 * @param shopCategory
 	 *            店铺分类
 	 */
 	public void setShopCategory(ShopCategory shopCategory) {
@@ -909,18 +906,18 @@ public class Shop extends BaseEntity {
 	 * @return 套餐商品
 	 */
 	@OneToMany(mappedBy = "shop", fetch = FetchType.LAZY)
-	public Set<SetProduct> getSetProducts() {
-		return setProducts;
+	public Set<Product> getPackageProducts() {
+		return packageProducts;
 	}
 
 	/**
 	 * 设置套餐商品
 	 * 
-	 * @param setProducts
+	 * @param packageProducts
 	 *            套餐商品
 	 */
-	public void setSetProducts(Set<SetProduct> setProducts) {
-		this.setProducts = setProducts;
+	public void setPackageProducts(Set<Product> packageProducts) {
+		this.packageProducts = packageProducts;
 	}
 	
 	
@@ -957,7 +954,7 @@ public class Shop extends BaseEntity {
 	/**
 	 * 设置经度
 	 * 
-	 * @param promotions
+	 * @param mapX
 	 *            经度
 	 */
 	public void setMapX(String mapX) {
@@ -1090,7 +1087,7 @@ public class Shop extends BaseEntity {
 	/**
 	 * 设置店铺介绍
 	 * 
-	 * @param storeDescript
+	 * @param shopDescript
 	 *            店铺介绍
 	 */
 	public void setShopDescript(String shopDescript) {
@@ -1100,29 +1097,29 @@ public class Shop extends BaseEntity {
 	/**
 	 * 获取店铺注册项值
 	 * 
-	 * @param storeAttribute
+	 * @param shopAttribute
 	 *            店铺注册项
 	 * @return 店铺注册项值
 	 */
 	@Transient
-	public Object getAttributeValue(ShopAttribute storeAttribute) {
-		if (storeAttribute != null) {
-			if (storeAttribute.getType() == Type.name) {
+	public Object getAttributeValue(ShopAttribute shopAttribute) {
+		if (shopAttribute != null) {
+			if (shopAttribute.getType() == Type.name) {
 				return getShopName();
-			} else if (storeAttribute.getType() == Type.area) {
+			} else if (shopAttribute.getType() == Type.area) {
 				return getArea();
-			} else if (storeAttribute.getType() == Type.address) {
+			} else if (shopAttribute.getType() == Type.address) {
 				return getAddress();
-			} else if (storeAttribute.getType() == Type.zipCode) {
+			} else if (shopAttribute.getType() == Type.zipCode) {
 				return getZipCode();
-			} else if (storeAttribute.getType() == Type.phone) {
+			} else if (shopAttribute.getType() == Type.phone) {
 				return getPhone();
-			} else if (storeAttribute.getType() == Type.mobile) {
+			} else if (shopAttribute.getType() == Type.mobile) {
 				return getMobile();
-			} else if (storeAttribute.getType() == Type.checkbox) {
-				if (storeAttribute.getPropertyIndex() != null) {
+			} else if (shopAttribute.getType() == Type.checkbox) {
+				if (shopAttribute.getPropertyIndex() != null) {
 					try {
-						String propertyName = ATTRIBUTE_VALUE_PROPERTY_NAME_PREFIX + storeAttribute.getPropertyIndex();
+						String propertyName = ATTRIBUTE_VALUE_PROPERTY_NAME_PREFIX + shopAttribute.getPropertyIndex();
 						String propertyValue = (String) PropertyUtils.getProperty(this, propertyName);
 						if (propertyValue != null) {
 							return JsonUtils.toObject(propertyValue, List.class);
@@ -1136,9 +1133,9 @@ public class Shop extends BaseEntity {
 					}
 				}
 			} else {
-				if (storeAttribute.getPropertyIndex() != null) {
+				if (shopAttribute.getPropertyIndex() != null) {
 					try {
-						String propertyName = ATTRIBUTE_VALUE_PROPERTY_NAME_PREFIX + storeAttribute.getPropertyIndex();
+						String propertyName = ATTRIBUTE_VALUE_PROPERTY_NAME_PREFIX + shopAttribute.getPropertyIndex();
 						return (String) PropertyUtils.getProperty(this, propertyName);
 					} catch (IllegalAccessException e) {
 						e.printStackTrace();
@@ -1156,36 +1153,36 @@ public class Shop extends BaseEntity {
 	/**
 	 * 设置店铺注册项值
 	 * 
-	 * @param storeAttribute
+	 * @param shopAttribute
 	 *            店铺注册项
 	 * @param attributeValue
 	 *            店铺注册项值
 	 */
 	@Transient
-	public void setAttributeValue(ShopAttribute storeAttribute, Object attributeValue) {
-		if (storeAttribute != null) {
+	public void setAttributeValue(ShopAttribute shopAttribute, Object attributeValue) {
+		if (shopAttribute != null) {
 			if (attributeValue instanceof String && StringUtils.isEmpty((String) attributeValue)) {
 				attributeValue = null;
 			}
-			if (storeAttribute.getType() == Type.name && (attributeValue instanceof String || attributeValue == null)) {
+			if (shopAttribute.getType() == Type.name && (attributeValue instanceof String || attributeValue == null)) {
 				setShopName((String) attributeValue);
-			}else if (storeAttribute.getType() == Type.birth && (attributeValue instanceof Date || attributeValue == null)) {
+			}else if (shopAttribute.getType() == Type.birth && (attributeValue instanceof Date || attributeValue == null)) {
 				setBirth((Date) attributeValue);
-			} else if (storeAttribute.getType() == Type.area && (attributeValue instanceof Area || attributeValue == null)) {
+			} else if (shopAttribute.getType() == Type.area && (attributeValue instanceof Area || attributeValue == null)) {
 				setArea((Area) attributeValue);
-			} else if (storeAttribute.getType() == Type.address && (attributeValue instanceof String || attributeValue == null)) {
+			} else if (shopAttribute.getType() == Type.address && (attributeValue instanceof String || attributeValue == null)) {
 				setAddress((String) attributeValue);
-			} else if (storeAttribute.getType() == Type.zipCode && (attributeValue instanceof String || attributeValue == null)) {
+			} else if (shopAttribute.getType() == Type.zipCode && (attributeValue instanceof String || attributeValue == null)) {
 				setZipCode((String) attributeValue);
-			} else if (storeAttribute.getType() == Type.phone && (attributeValue instanceof String || attributeValue == null)) {
+			} else if (shopAttribute.getType() == Type.phone && (attributeValue instanceof String || attributeValue == null)) {
 				setPhone((String) attributeValue);
-			} else if (storeAttribute.getType() == Type.mobile && (attributeValue instanceof String || attributeValue == null)) {
+			} else if (shopAttribute.getType() == Type.mobile && (attributeValue instanceof String || attributeValue == null)) {
 				setMobile((String) attributeValue);
-			} else if (storeAttribute.getType() == Type.checkbox && (attributeValue instanceof List || attributeValue == null)) {
-				if (storeAttribute.getPropertyIndex() != null) {
-					if (attributeValue == null || (storeAttribute.getOptions() != null && storeAttribute.getOptions().containsAll((List<?>) attributeValue))) {
+			} else if (shopAttribute.getType() == Type.checkbox && (attributeValue instanceof List || attributeValue == null)) {
+				if (shopAttribute.getPropertyIndex() != null) {
+					if (attributeValue == null || (shopAttribute.getOptions() != null && shopAttribute.getOptions().containsAll((List<?>) attributeValue))) {
 						try {
-							String propertyName = ATTRIBUTE_VALUE_PROPERTY_NAME_PREFIX + storeAttribute.getPropertyIndex();
+							String propertyName = ATTRIBUTE_VALUE_PROPERTY_NAME_PREFIX + shopAttribute.getPropertyIndex();
 							PropertyUtils.setProperty(this, propertyName, JsonUtils.toJson(attributeValue));
 						} catch (IllegalAccessException e) {
 							e.printStackTrace();
@@ -1197,9 +1194,9 @@ public class Shop extends BaseEntity {
 					}
 				}
 			} else {
-				if (storeAttribute.getPropertyIndex() != null) {
+				if (shopAttribute.getPropertyIndex() != null) {
 					try {
-						String propertyName = ATTRIBUTE_VALUE_PROPERTY_NAME_PREFIX + storeAttribute.getPropertyIndex();
+						String propertyName = ATTRIBUTE_VALUE_PROPERTY_NAME_PREFIX + shopAttribute.getPropertyIndex();
 						PropertyUtils.setProperty(this, propertyName, attributeValue);
 					} catch (IllegalAccessException e) {
 						e.printStackTrace();
@@ -1240,12 +1237,14 @@ public class Shop extends BaseEntity {
 	
 	/**
 	 * 删除前处理
+	 * 店铺删除前必须处理套餐商品，订单，付款单之间的关联
+	 * 套餐暂不参加活动
 	 */
 	@PreRemove
 	public void preRemove() {
-		Set<SetProduct> products = getSetProducts();
+		Set<Product> products = getPackageProducts();
 		if (products != null) {
-			for (SetProduct product : products) {
+			for (Product product : products) {
 				product.setShop(null);
 			}
 		}
